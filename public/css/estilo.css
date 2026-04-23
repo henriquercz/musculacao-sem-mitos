@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #F6F5F1;
+  /*background-color: #F6F5F1;*/
 }
 
 :root {
@@ -72,6 +72,8 @@ body {
   justify-content: space-around;
   /* width: 100%; */
   align-items: center;
+  border-bottom: 2px solid #E7E5DF;
+  background-color: #DCE8E1;
 }
 
 .primeira-secao-conteudo {
@@ -139,6 +141,70 @@ body {
   width: 500px;
 }
 
+.primeira-secao::after {
+  border-bottom: 2px solid #E7E5DF;
+}
+
+/* SEÇÃO PROBLEMAS */
+
+.secao-problema {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F6F5F1;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.secao-problema h1 {
+  margin-top: 60px;
+  font-size: 48px;
+}
+
+.secao-problema p {
+  font-size: 22px;
+  color: #666666;
+  margin-top: -20px;
+  text-align: center;
+  width: 900px;
+}
+
+.container-problema-cards {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  justify-content: space-evenly;
+  margin-top: 60px;
+} 
+
+.problema-card h1 {
+  font-size: 28px;
+}
+
+.problema-card p {
+  width: 300px;
+  font-size: 22px;
+  text-align: left;
+}
+
+.problema-card {
+  background-color: #ffffff;
+  border: #6666661e solid 2px;
+  border-radius: 15px;
+  width: 300px;
+  padding: 25px;
+  padding-left: 60px;
+  text-align: left;
+}
+
+.card-problema-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #d8d7e7;
+  margin-bottom: -30px;
+  margin-top: 15px;
+}
 
 /* MISSÃO VISÃO VALORES */
 

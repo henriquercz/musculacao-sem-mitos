@@ -199,11 +199,18 @@ body {
 }
 
 .card-problema-icon {
-  width: 60px;
-  height: 60px;
-  background-color: #d8d7e7;
+  width: 80px;
+  height: 80px;
+  background-color: #d8d7e7bb;
+  border-radius: 15px;
+  border: rgba(21, 63, 201, 0.548)  2px solid;
   margin-bottom: -30px;
   margin-top: 15px;
+}
+
+.card-problema-icon img {
+  width: 80px;
+  height: 80px;
 }
 
 /* MISSÃO VISÃO VALORES */

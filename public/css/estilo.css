@@ -66,7 +66,7 @@ body {
 }
 
 /* PRIMEIRA SECAO */
-.primera-secao {
+.primeira-secao {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -81,8 +81,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 600px;
-  margin-right: 200px;
-  margin-left: 150px;
+  /*margin-right: 200px;*/
+  margin-left: 50px;
   margin-bottom: 200px;
 }
 
@@ -101,6 +101,10 @@ body {
 
 .primeira-secao-conteudo h1 {
   font-size: 62px;
+}
+
+#span-logica {
+  color: rgb(21, 63, 201);
 }
 
 .primeira-secao-conteudo p {
@@ -136,9 +140,21 @@ body {
   border-color: #6666661e;
 }
 
+.primeira-secao {
+  height: 100vh;
+  background-image: url('../assets/imgs/background-hero-section.png'); /* sua imagem */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
 .primeira-secao-imagem img  {
-  margin-top: 200px;
-  width: 500px;
+  margin-top: 100px;
+  width: 900px;
+  height: 900px;
+  margin-right: -100px;
 }
 
 .primeira-secao::after {
@@ -196,6 +212,13 @@ body {
   padding: 25px;
   padding-left: 60px;
   text-align: left;
+  transition: all 0.3ms;
+}
+
+.problema-card:hover {
+  transform: translateY(-4px);
+  box-shadow: #666666;
+  border-color: rgba(21, 63, 201, 0.548);
 }
 
 .card-problema-icon {

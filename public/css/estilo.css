@@ -246,6 +246,7 @@ body {
 
 .secao-mitos h1 {
   margin-top: 50px;
+  font-size: 48px;
 }
 
 .secao-mitos p {
@@ -306,6 +307,7 @@ body {
 
 .fundamentos h1 {
   margin-top: 50px;
+  font-size: 48px;
 }
 
 .fundamentos p {
@@ -353,6 +355,97 @@ body {
 .icon-fundamentos img {
   width: 50px;
   height: 50px;
+}
+
+/* SEÇAO DE HISTORIA */
+
+.secao-historia {
+  display: flex;
+  flex-direction: column;
+}
+
+.secao-historia-full {
+  height: 100%;
+  background-image: url('../assets/imgs/background-historia-section.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.secao-historia-h1 {
+  font-size: 48px;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.secao-historia-p {
+  text-align: center;
+  margin-top: -20px;
+  margin-bottom: 100px;
+  font-size: 20px;
+}
+
+.historia-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.historia-conteudo {
+  display: flex;
+  flex-direction: row;
+  width: 1000px;
+}
+
+.historia-texto p {
+  font-size: 20px;
+}
+
+.historia-texto h2 {
+  font-size: 30px;
+}
+
+.historia-resultado {
+  background-color: #E7E5DF;
+  padding: 30px;
+  padding-left: 30px;
+  border-radius: 25px;
+  border: solid 2px #6666665e;
+}
+
+.historia-timeline {
+  position: relative;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.historia-timeline::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: rgb(21, 63, 201);
+}
+
+.timeline-card {
+  width: 750px;
+  background-color: #e5e5e5;
+  border-radius: 25px;
+  position: relative;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+
+.dot {
+  position: absolute;
+  left: -25px;
+  top: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(21, 63, 201);
 }
 
 /* MISSÃO VISÃO VALORES */

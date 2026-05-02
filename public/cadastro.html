@@ -19,20 +19,20 @@
   <!--header inicio-->
   <div class="header">
     <div class="container">
-      <h1 class="titulo">AquaTech</h1>
+      <h1 class="titulo"><b>Musculação</b> <span>sem Mitos</span></h1>
       <ul class="navbar">
-        <li>
-          <a href="index.html">Inicial</a>
+        <li class="agora">
+          <a href="#">Inicial</a>
         </li>
         <li>
-          <a href="simulador.html">Simulador</a>
+          <a href="simulador.html">Quiz</a>
         </li>
         <li>|</li>
         <li>
           <a href="login.html">Login</a>
         </li>
-        <li class="agora">
-          <a href="#">Cadastro</a>
+        <li>
+          <a href="cadastro.html">Cadastro</a>
         </li>
       </ul>
     </div>
@@ -54,10 +54,6 @@
                          Assim que inserir vá para o script abaixo.
                      -->
           <div class="campo">
-            <span>Código de ativação:</span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
-          </div>
-          <div class="campo">
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
@@ -72,6 +68,13 @@
           <div class="campo">
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
+          </div>
+          <div class="campo">
+            <span>Você já conhecia a metodologia de treino baseado em ciência?</span>
+            <p><input type="radio" name="conheceMetodologia" id="conheceMetodologia_sim" value="sim"> Sim, já conhecia
+            </p>
+            <p><input type="radio" name="conheceMetodologia" id="conheceMetodologia_nao" value="nao"> Não, conheci agora
+            </p>
           </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
@@ -98,8 +101,6 @@
 
 <script>
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
 
   function cadastrar() {
     // aguardar();
@@ -110,16 +111,21 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
-    var idEmpresaVincular
+    var conheceMetodologiaVar = '';
+
+    // verificar se o checked esta em sim ou nao
+    if (conheceMetodologia_sim.checked) {
+      conheceMetodologiaVar = 'sim'
+    } else if (conheceMetodologia_nao.checked) {
+      conheceMetodologiaVar = 'nao'
+    }
 
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -127,22 +133,38 @@
 
       finalizarAguardar();
       return false;
+    } else if (nomeVar.length > 50) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "O nome não pode passar de 50 caracteres.";
+
+      finalizarAguardar();
+      return false;
+    } else if (emailVar.length > 50) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "Email nao pode passar de 50 caracteres";
+
+      finalizarAguardar();
+      return false;
+    } else if (confirmacaoSenhaVar != senhaVar) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "As senhas estão diferentes, confira se preencheu certo.";
+
+      finalizarAguardar();
+      return false;
+    } else if (conheceMetodologiaVar == '') {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "Marque uma opção para conhece ou não conhece.";
+
+      finalizarAguardar();
+      return false;
     } else {
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
-    }
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -156,7 +178,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
+        conheceMetodologiaServer: conheceMetodologiaVar
       }),
     })
       .then(function (resposta) {
@@ -184,26 +206,6 @@
       });
 
     return false;
-  }
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
   }
 
   function sumirMensagem() {

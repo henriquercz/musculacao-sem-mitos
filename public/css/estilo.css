@@ -537,6 +537,11 @@ body {
   padding: 5px 0;
 }
 
+#forcaSenha {
+  font-weight: bold;
+  color: rgb(226, 190, 26);
+}
+
 .botao {
   cursor: pointer;
   font-family: "Barlow", sans-serif;

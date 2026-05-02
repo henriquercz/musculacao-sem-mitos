@@ -63,11 +63,13 @@
           </div>
           <div class="campo">
             <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
+            <input id="senha_input" type="password" oninput="forcaSenha()" placeholder="******" />
+            <div id="msgForcaSenha"></div>
           </div>
           <div class="campo">
             <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+            <input id="confirmacao_senha_input" oninput="senhaIgual()" type="password" placeholder="******" />
+            <div id="msgSenhaIgual"></div>
           </div>
           <div class="campo">
             <span>Você já conhecia a metodologia de treino baseado em ciência?</span>
@@ -147,6 +149,13 @@
 
       finalizarAguardar();
       return false;
+    } else if (senhaVar.length < 6) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "Sua senha está fraca, deve ter no minimo 6 caracteres";
+
+      finalizarAguardar();
+      return false;
     } else if (confirmacaoSenhaVar != senhaVar) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -211,4 +220,32 @@
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
+
+  function forcaSenha() {
+    let senha = senha_input.value;
+
+    if (senha.length < 6) {
+      msgForcaSenha.innerHTML = `Senha Fraca!`;
+      msgForcaSenha.style.color = "#FF5733";
+    } else if (senha.length >= 6 && senha.length < 8) {
+      msgForcaSenha.innerHTML = `Senha Média!`
+      msgForcaSenha.style.color = "#FFA500";
+    } else if (senha.length >= 8) {
+      msgForcaSenha.innerHTML = `Senha Forte!`;
+      msgForcaSenha.style.color = "#228B22";
+    }
+  }
+
+  function senhaIgual() {
+    let senha = senha_input.value;
+    let confirmacaoSenha = confirmacao_senha_input.value;
+
+    if (senha != confirmacaoSenha) {
+      msgSenhaIgual.innerHTML = `As senhas não correspondem!`;
+      msgSenhaIgual.style.color = "#FF5733"
+    } else {
+      msgSenhaIgual.innerHTML = '';
+    }
+  }
+
 </script>

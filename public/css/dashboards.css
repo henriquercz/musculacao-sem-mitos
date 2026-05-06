@@ -47,6 +47,35 @@ body {
 
 /* PAGINA DE MATERIAIS */
 
+/* HEADER LATERAL */
+.navegacao {
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: space-around;
+}
+
+.btn-nav {
+    transition: all 0.3s;
+    width: 320px;
+    height: 70px;
+    border-radius: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 15px;
+}
+
+.btn-nav:hover {
+    background-color: #f6f5f177;
+}
+
+.btn-nav h3 {
+    color: rgb(21, 63, 201);
+    font-size: 20px;
+}
+
 /* SECAO DE VIDEOS */
 .secao-videos {
     display: flex;

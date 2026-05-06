@@ -44,3 +44,23 @@ body {
     background-color: #f6f5f1;
     min-height: 100vh;
 }
+
+/* PAGINA DE MATERIAIS */
+
+/* SECAO DE VIDEOS */
+.secao-videos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card-video {
+    width: 600px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(21, 63, 201, 0.432);
+    border-radius: 25px;
+}

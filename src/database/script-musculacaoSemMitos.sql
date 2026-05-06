@@ -9,3 +9,5 @@ senha varchar(50),
 conheceMetodologia char(3),
 constraint chk_conheceMetodologia check(conheceMetodologia in ('sim', 'nao'))
 );
+
+select * from usuario;

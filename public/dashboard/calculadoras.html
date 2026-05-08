@@ -58,6 +58,18 @@
                 <button onclick="calcularIMC()">Calcular</button>
                 <div id="resultadoIMC"></div>
             </div>
+
+            <div class="card-video card-calc">
+                <h2>Quantos litros de água você deve beber por dia?</h2>
+                <div class="conteudo-calc">
+                    <h3>
+                        Insira seu peso (KG):
+                        <input type="number" placeholder="Ex: 80 KG" id="iptPesoAgua">
+                    </h3>
+                </div>
+                <button onclick="calcularAgua()">Calcular</button>
+                <div id="resultadoAgua"></div>
+            </div>
          </div>
     </div>
 </div>
@@ -103,6 +115,25 @@
                 <b style="font-size: 36px; color: #153fc9; margin: 10px 0;">${imc.toFixed(2)}</b>
                 <span style="font-size: 18px; color: ${cor}; font-weight: bold;">
                     Você está ${classificacao}.
+                </span>
+            `;
+        }
+    }
+
+    function calcularAgua() {
+        let peso = Number(iptPesoAgua.value);
+
+        if (peso <= 0) {
+            alert("Por favor, insira um valor válido para peso!");
+        } else {
+            let litros = peso * 0.035;
+
+            resultadoAgua.style.display = "flex";
+            resultadoAgua.innerHTML = `
+                <span style="font-size: 14px; color: #666;">Com base no seu peso, você deve beber aproximadamente:</span>
+                <b style="font-size: 36px; color: #153fc9; margin: 10px 0;">${litros.toFixed(2)} litros</b>
+                <span style="font-size: 18px; color: #27ae60; font-weight: bold;">
+                    de água por dia.
                 </span>
             `;
         }

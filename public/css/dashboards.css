@@ -33,6 +33,10 @@ body {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.header-left span {
+    color: darkblue;
+}
+
 .header-left h1 {
     font-size: 28px;
 }
@@ -76,6 +80,10 @@ body {
     font-size: 20px;
 }
 
+.btn-nav a {
+    color: black;
+}
+
 /* SECAO DE VIDEOS */
 .secao-videos {
     display: flex;
@@ -92,4 +100,43 @@ body {
     align-items: center;
     background-color: rgba(21, 63, 201, 0.432);
     border-radius: 25px;
+}
+
+.card-video button {
+    width: 200px;
+    height: 50px;
+}
+
+/* SECAO CALCULADORA */
+.conteudo-calc {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudo-calc h3 {
+    text-align: center;
+}
+
+.card-calc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#resultadoIMC {
+    display: none;
+    margin-top: 30px;
+    background-color: #F1F2F0;
+    min-height: 250px;
+    width: 300px;
+    padding: 30px;
+    border-radius: 20px;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

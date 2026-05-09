@@ -48,7 +48,7 @@
     <div class="container">
       <div class="card card-cadastro">
         <h2>Bem-vindo!</h2>
-        <div class="formulario">
+        <div class="formulario" style="display: flex;">
           <!--
                          Para inserir mais um campo, copie uma das inputs abaixo.
                          Assim que inserir vá para o script abaixo.
@@ -77,6 +77,17 @@
             </p>
             <p><input type="radio" name="conheceMetodologia" id="conheceMetodologia_nao" value="nao"> Não, conheci agora
             </p>
+          </div>
+          <div class="campo">
+            <span>
+              Qual o principal motivo para começar a treinar?
+            </span>
+            <select name="" id="selMotivoTreino">
+              <option value="Ganhar Massa">Ganhar massa</option>
+              <option value="Perder Peso">Perder peso</option>
+              <option value="Recomposição Corporal">Recomposição Corporal</option>
+              <option value="Saúde Geral">Saúde Geral</option>
+            </select>
           </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
@@ -114,6 +125,7 @@
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
     var conheceMetodologiaVar = '';
+    var objetivoVar = selMotivoTreino.value;
 
     // verificar se o checked esta em sim ou nao
     if (conheceMetodologia_sim.checked) {
@@ -127,7 +139,8 @@
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+      confirmacaoSenhaVar == "" ||
+      objetivoVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -187,7 +200,8 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        conheceMetodologiaServer: conheceMetodologiaVar
+        conheceMetodologiaServer: conheceMetodologiaVar,
+        objetivoServer: objetivoVar
       }),
     })
       .then(function (resposta) {

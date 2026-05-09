@@ -47,6 +47,7 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var conheceMetodologia = req.body.conheceMetodologiaServer;
+    var objetivo = req.body.objetivoServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -60,7 +61,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, conheceMetodologia)
+        usuarioModel.cadastrar(nome, email, senha, conheceMetodologia, objetivo)
             .then(
                 function (resultado) {
                     res.json(resultado);

@@ -605,6 +605,10 @@ body {
   flex-direction: column;
 }
 
+.formulario2 {
+  width: 300px;
+}
+
 input {
   margin-bottom: 10px;
   border: 2px solid #32b9cd;

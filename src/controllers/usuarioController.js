@@ -48,6 +48,9 @@ function cadastrar(req, res) {
     var senha = req.body.senhaServer;
     var conheceMetodologia = req.body.conheceMetodologiaServer;
     var objetivo = req.body.objetivoServer;
+    var pesoAtual = req.body.pesoAtualServer;
+    var pesoDesejado = req.body.pesoDesejadoServer;
+    var dataDesejada = req.body.dataDesejadaServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -61,10 +64,13 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, conheceMetodologia, objetivo)
+        usuarioModel.cadastrar(nome, email, senha, conheceMetodologia, objetivo, pesoDesejado, dataDesejada)
             .then(
                 function (resultado) {
-                    res.json(resultado);
+                    // res.json(resultado);
+                    var idUser = resultado.insertId;
+
+                    return usuarioModel.registrarPeso(pesoAtual, idUser);
                 }
             ).catch(
                 function (erro) {
@@ -75,7 +81,15 @@ function cadastrar(req, res) {
                     );
                     res.status(500).json(erro.sqlMessage);
                 }
-            );
+            )
+            .then(function (resultadoPeso) {
+                res.json(resultadoPeso)
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao registrar o peso! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            })
     }
 }
 

@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
-<body onload="listar()">
+<body>
   <!--header inicio-->
   <div class="header">
     <div class="container">
@@ -89,8 +89,26 @@
               <option value="Saúde Geral">Saúde Geral</option>
             </select>
           </div>
+          <button class="botao" onclick="proximoPasso()">Próximo Passo</button>
+        </div>
+
+        <div class="formulario2" style="display: none;">
+          <div class="campo">
+            <h2>Agora vamos falar sobre seu peso?</h2>
+            <span>Peso Atual:</span>
+            <input type="number" id="iptPesoAtual" placeholder="Seu peso">
+          </div>
+          <div class="campo">
+            <span>Qual peso deseja atingir?</span>
+            <input type="number" id="iptPesoDesejado" placeholder="Peso desejado">
+          </div>
+          <div class="campo">
+            <span>Até quando deseja atingir esse peso?</span>
+            <input type="date" id="iptDataDesejada">
+          </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
+
         <div id="div_aguardar" class="loading-div">
           <img src="./assets/circle-loading.gif" id="loading-gif" />
         </div>
@@ -114,12 +132,7 @@
 
 <script>
 
-
-  function cadastrar() {
-    // aguardar();
-
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
+  function proximoPasso() {
     var nomeVar = nome_input.value;
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
@@ -127,14 +140,12 @@
     var conheceMetodologiaVar = '';
     var objetivoVar = selMotivoTreino.value;
 
-    // verificar se o checked esta em sim ou nao
     if (conheceMetodologia_sim.checked) {
       conheceMetodologiaVar = 'sim'
     } else if (conheceMetodologia_nao.checked) {
       conheceMetodologiaVar = 'nao'
     }
 
-    // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
@@ -143,89 +154,100 @@
       objetivoVar == ""
     ) {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
       return false;
     } else if (nomeVar.length > 50) {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "O nome não pode passar de 50 caracteres.";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "O nome não pode passar de 50 caracteres.";
       return false;
     } else if (emailVar.length > 50) {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "Email nao pode passar de 50 caracteres";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "Email nao pode passar de 50 caracteres";
       return false;
     } else if (senhaVar.length < 6) {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "Sua senha está fraca, deve ter no minimo 6 caracteres";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "Sua senha está fraca, deve ter no minimo 6 caracteres";
       return false;
     } else if (confirmacaoSenhaVar != senhaVar) {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "As senhas estão diferentes, confira se preencheu certo.";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "As senhas estão diferentes, confira se preencheu certo.";
       return false;
     } else if (conheceMetodologiaVar == '') {
       cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "Marque uma opção para conhece ou não conhece.";
-
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "Marque uma opção para conhece ou não conhece.";
       return false;
     } else {
-      setInterval(sumirMensagem, 5000);
+      document.querySelector(".formulario").style.display = "none";
+      document.querySelector(".formulario2").style.display = "block";
+    }
+  }
+
+
+
+
+  function cadastrar() {
+    var pesoAtualVar = iptPesoAtual.value;
+    var pesoDesejadoVar = iptPesoDesejado.value;
+    var dataDesejadaVar = iptDataDesejada.value;
+
+    if (
+      pesoAtualVar == "" ||
+      pesoDesejadoVar == "" ||
+      dataDesejadaVar == ""
+    ) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+      return false;
+    } else if (pesoAtualVar > 500 || pesoDesejadoVar > 500) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Seu peso não pode ser maior que 500kg.";
+      return false;
+    } else if (pesoAtualVar < 20 || pesoDesejadoVar < 20) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Seu peso não pode ser menor que 20kg.";
+      return false;
     }
 
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var conheceMetodologiaVar = '';
+    if (conheceMetodologia_sim.checked) {
+      conheceMetodologiaVar = 'sim'
+    } else if (conheceMetodologia_nao.checked) {
+      conheceMetodologiaVar = 'nao'
+    }
+    var objetivoVar = selMotivoTreino.value;
 
-    // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
         conheceMetodologiaServer: conheceMetodologiaVar,
-        objetivoServer: objetivoVar
+        objetivoServer: objetivoVar,
+        pesoDesejadoServer: pesoDesejadoVar,
+        dataDesejadaServer: dataDesejadaVar,
+        pesoAtualServer: pesoAtualVar
       }),
     })
       .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
         if (resposta.ok) {
           cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
+          mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
           setTimeout(() => {
             window.location = "login.html";
           }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
       });
 
     return false;

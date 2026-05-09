@@ -12,41 +12,117 @@
 
 <body>
     <div class="janela">
-    <div class="header-left">
-        <h1>Musculação <span>sem Mitos</span></h1>
-        <div class="hello">
-            <h3>Olá, <span id="b_usuario">User</span>!</h3>
+        <div class="header-left">
+            <h1>Musculação <span>sem Mitos</span></h1>
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">User</span>!</h3>
+            </div>
+            <div class="navegacao">
+                <div class="btn-nav">
+                    <a href="dashboard.html">
+                        <h3>Dashboard</h3>
+                    </a>
+                </div>
+
+                <div class="btn-nav">
+                    <a href="videos.html">
+                        <h3>Material Explicativo</h3>
+                    </a>
+                </div>
+
+                <div class="btn-nav">
+                    <a href="calculadoras.html">
+                        <h3>Calculadoras</h3>
+                    </a>
+                </div>
+
+                <div class="btn-nav">
+                    <a href="forum.html">
+                        <h3>Fórum</h3>
+                    </a>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
         </div>
-        <div class="navegacao">
-            <div class="btn-nav">
-            <a href="dashboard.html"><h3>Dashboard</h3></a>
-            </div>
+        <div class="dash">
+            <!-- Conteúdo principal e gráficos aqui -->
+            <div class="secao-kpi">
+                <div class="card-kpi">
+                    <h3>Peso atual:</h3>
+                    <div id="pesoAtual"></div>
+                    <p>Data: <span id="dataRegistro"></span></p>
+                </div>
 
-            <div class="btn-nav">
-            <a href="videos.html"><h3>Material Explicativo</h3></a>
-            </div>
+                <div class="card-kpi">
+                    <h3>Quantos KG faltam para sua meta:</h3>
+                    <div id="pesoProgresso"></div>
+                </div>
 
-            <div class="btn-nav">
-            <a href="calculadoras.html"><h3>Calculadoras</h3></a>
+                <div class="card-kpi">
+                    <h3>Quantos dias faltam para sua meta:</h3>
+                    <div id="diasRestantes"></div>
+                </div>
             </div>
-
-            <div class="btn-nav">
-            <a href="forum.html"><h3>Fórum</h3></a>
-            </div>
-        </div>
-        
-        <div class="btn-logout" onclick="limparSessao()">
-            <h3>Sair</h3>
         </div>
     </div>
-    <div class="dash">
-        <!-- Conteúdo principal e gráficos aqui -->
-    </div>
-</div>
 </body>
 
 </html>
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    if (sessionStorage.ID_USUARIO == undefined) {
+        window.location.href = "../login.html";
+    }
+
+    function exibirPesoAtual() {
+        fetch(`/ultimoPeso/buscarUltimoPeso/${sessionStorage.ID_USUARIO}`, { cache: 'no-store' }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (novoRegistro) {
+                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+
+                    pesoAtual.innerHTML = `${novoRegistro[0].peso}kg`
+                    dataRegistro.innerHTML = `${novoRegistro[0].dataRegistro}`
+                })
+            } else {
+                console.log(`Erro ao buscar peso atual.`);
+            }
+        })
+    }
+
+    function exibirMetaAtual() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/ultimoPeso/buscarMetaPeso/${idUsuario}`, { cache: 'no-store'}).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (metaPesoAtual) {
+                    console.log(`Dados recebidos: ${JSON.stringify(metaPesoAtual)}`);
+
+                    let pAtual = metaPesoAtual[0].pesoAtual;
+                    let pDesejado = metaPesoAtual[0].pesoDesejado;
+                    let pesoRestante = Math.abs(pAtual - pDesejado);
+
+                    pesoProgresso.innerHTML = `${pesoRestante.toFixed(1)}kg`;
+                    diasRestantes.innerHTML = `${metaPesoAtual[0].diasParaMeta} dias`;
+                })
+            }
+        })
+    }
+
+    /*
+    `select p.peso as pesoAtual, u.pesoDesejado as pesoDesejado, DATEDIFF(u.dataDesejada, now()) as diasParaMeta
+	from usuario as u join registro_peso as p
+		on u.idUser = p.fkUsuario
+        where u.idUser = ${idUsuario}
+        order by p.idRegistro desc limit1;`;
+    */
+
+    window.onload = function () {
+        exibirPesoAtual();
+        exibirMetaAtual();
+    }
 </script>

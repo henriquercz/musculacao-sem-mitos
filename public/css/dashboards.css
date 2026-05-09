@@ -179,3 +179,31 @@ body {
     align-items: center;
     text-align: center;
 }
+
+/* SEÇÃO KPI DASHBOARD */
+.secao-kpi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card-kpi {
+    background-color: rgba(21, 63, 201, 0.429);
+    padding: 15px;
+    text-align: center;
+}
+
+#pesoAtual {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#diasRestantes {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#pesoProgresso {
+    font-size: 28px;
+    font-weight: bold;
+}

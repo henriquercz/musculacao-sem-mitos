@@ -48,5 +48,6 @@ dtSalvo datetime default now(),
 );
 
 select * from usuario;
+select * from registro_peso;
 
 delete from usuario where idUser = 1;

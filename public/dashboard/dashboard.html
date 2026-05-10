@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Musculação sem Mitos | Dashboard</title>
     <link rel="stylesheet" href="../css/estilo.css">
     <link rel="stylesheet" href="../css/dashboards.css">
-    <script src="./js/sessao.js"></script>
+    <script src="../js/sessao.js"></script>
 </head>
 
 <body>
@@ -109,6 +109,10 @@
                     let pAtual = metaPesoAtual[0].pesoAtual;
                     let pDesejado = metaPesoAtual[0].pesoDesejado;
                     let pesoRestante = Math.abs(pAtual - pDesejado);
+
+                    if (metaPesoAtual[0].diasParaMeta <= 0) {
+                        metaPesoAtual[0].diasParaMeta = 'Finalizada'
+                    }
 
                     pesoProgresso.innerHTML = `${pesoRestante.toFixed(1)}kg`;
                     diasRestantes.innerHTML = `${metaPesoAtual[0].diasParaMeta} dias`;

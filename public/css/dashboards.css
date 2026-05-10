@@ -181,16 +181,30 @@ body {
 }
 
 /* SEÇÃO KPI DASHBOARD */
+.balao-dash {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(26, 171, 26, 0.388);
+    border-radius: 50px;
+    border: green 2px solid;
+    width: 300px;
+    height: 50px;
+    padding-left: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
 .secao-kpi {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .card-kpi {
     background-color: rgba(21, 63, 201, 0.429);
     padding: 15px;
     text-align: center;
+    border-radius: 15px;
 }
 
 #pesoAtual {

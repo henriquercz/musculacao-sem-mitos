@@ -14,7 +14,7 @@ function buscarMetaPeso(idUsuario) {
     // var instrucaoSql = `select pesoDesejado, DATE_FORMAT(dataDesejada, '%d, %m, %Y') as dataDesejada
     //from usuario where idUser = ${idUsuario};`
 
-    var instrucaoSql = `select p.peso as pesoAtual, u.pesoDesejado as pesoDesejado, DATEDIFF(u.dataDesejada, now()) as diasParaMeta
+    var instrucaoSql = `select p.peso as pesoAtual, u.pesoDesejado as pesoDesejado, DATEDIFF(u.dataDesejada, now()) as diasParaMeta, u.objetivo as objetivo
 	from usuario as u join registro_peso as p
 		on u.idUser = p.fkUsuario
         where u.idUser = ${idUsuario}

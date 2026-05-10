@@ -49,6 +49,10 @@
         </div>
         <div class="dash">
             <!-- Conteúdo principal e gráficos aqui -->
+            <div class="balao-dash">
+                <p>&bull; Seu objetivo é: <span id="balaoStatus"></span></p>
+            </div>
+
             <div class="secao-kpi">
                 <div class="card-kpi">
                     <h3>Peso atual:</h3>
@@ -108,6 +112,7 @@
 
                     pesoProgresso.innerHTML = `${pesoRestante.toFixed(1)}kg`;
                     diasRestantes.innerHTML = `${metaPesoAtual[0].diasParaMeta} dias`;
+                    balaoStatus.innerHTML = `<b>${metaPesoAtual[0].objetivo}</b>`
                 })
             }
         })

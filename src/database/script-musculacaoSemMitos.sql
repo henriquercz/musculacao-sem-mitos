@@ -51,3 +51,12 @@ select * from usuario;
 select * from registro_peso;
 
 delete from usuario where idUser = 1;
+
+select p.peso, u.pesoDesejado, DATEDIFF(u.dataDesejada, now()) as diasParaMeta
+	from usuario as u join registro_peso as p
+		on u.idUser = p.fkUsuario;
+        
+SELECT peso, DATE_FORMAT(dataRegistro, '%d/%m') as data_grafico 
+        FROM registro_peso 
+        WHERE fkUsuario = ${idUsuario} 
+        ORDER BY idRegistro DESC LIMIT ${limite_linhas};

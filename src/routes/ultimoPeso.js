@@ -11,4 +11,8 @@ router.get("/buscarMetaPeso/:idUsuario", function (req, res) {
     ultimoPesoController.buscarMetaPeso(req, res);
 });
 
+router.get("/buscarUltimosRegistrosPeso/:idUsuario", function (req, res) {
+    ultimoPesoController.buscarUltimosRegistrosPeso(req, res);
+});
+
 module.exports = router;

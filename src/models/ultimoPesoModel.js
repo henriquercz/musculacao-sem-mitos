@@ -24,8 +24,20 @@ function buscarMetaPeso(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarUltimosRegistrosPeso(idUsuario, limite_linhas) {
+
+    var instrucaoSql = `SELECT peso, DATE_FORMAT(dataRegistro, '%d/%m') as data_grafico 
+        FROM registro_peso 
+        WHERE fkUsuario = ${idUsuario} 
+        ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarUltimoPeso,
-    buscarMetaPeso
+    buscarMetaPeso,
+    buscarUltimosRegistrosPeso
 }

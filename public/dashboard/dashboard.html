@@ -49,11 +49,26 @@
                 <h3>Sair</h3>
             </div>
         </div>
+        <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
         <div class="dash">
             <!-- Conteúdo principal e gráficos aqui -->
-            <div class="balao-dash">
-                <p>&bull; Seu objetivo é: <span id="balaoStatus"></span></p>
+            <div class="divBaloes">
+                <div class="balao-dash">
+                    <p>&bull; Seu objetivo é: <span id="balaoStatus"></span></p>
+                </div>
+
+                <a href="#cardAlterarPeso" title="editar ícones" onclick="abrirCardAlterarPeso()">
+                    <div class="balao-dash">
+                        <img src="../assets/icon/botao-editar.png" alt="">
+                        <p>Registrar seu novo peso</p>
+                    </div>
+                </a>
             </div>
+
 
             <div class="secao-kpi">
                 <div class="card-kpi">
@@ -76,6 +91,15 @@
 
             <div id="graficos">
                 <canvas id="myChartCanvas"></canvas>
+            </div>
+
+            <div id="cardAlterarPeso" class="cardAlterarPeso" style="display: none;">
+                <h1>Registre seu novo peso:</h1>
+                <h3>
+                    Novo peso:
+                    <input type="number" name="" id="iptNovoPeso">
+                </h3>
+                <button onclick="atualizarPeso()">Atualizar</button>
             </div>
 
 
@@ -296,6 +320,54 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
 
+    }
+
+
+    function abrirCardAlterarPeso() {
+        cardAlterarPeso.style.display = 'block';
+    }
+
+    function atualizarPeso() {
+        var pesoNovoVar = Number(iptNovoPeso.value);
+
+        if (pesoNovoVar == '') {
+            alert('Seu peso não pode estar vazio.');
+        } else if (pesoNovoVar < 20) {
+            alert('Seu peso não pode ser menor que 20Kg');
+        } else if (pesoNovoVar > 400) {
+            alert('Seu peso novo não pode ser superior a 400Kg.');
+        } else {
+            fetch("/alterarPesoAtual/atualizarPesoAtual", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    pesoNovoServer: pesoNovoVar,
+                    idUsuario: sessionStorage.ID_USUARIO
+                }),
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        cardErro.style.display = "block";
+                        mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
+                        setTimeout(() => {
+                            window.location = "dashboard.html";
+                        }, "2000");
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
+        }
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none";
     }
 
     window.onload = function () {

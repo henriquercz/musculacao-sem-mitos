@@ -50,6 +50,10 @@ dtSalvo datetime default now(),
 select * from usuario;
 select * from registro_peso;
 
+update registro_peso set dataRegistro = '2026-04-29' where idRegistro = 1;
+insert into registro_peso values
+(default, 72.400, '2026-05-06', 3);
+
 delete from usuario where idUser = 1;
 
 select p.peso, u.pesoDesejado, DATEDIFF(u.dataDesejada, now()) as diasParaMeta

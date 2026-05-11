@@ -157,7 +157,7 @@ body {
     padding: 30px;
     border-radius: 20px;
     color: #333;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -173,7 +173,7 @@ body {
     padding: 30px;
     border-radius: 20px;
     color: #333;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -208,6 +208,21 @@ body {
     border-radius: 15px;
 }
 
+.balao-dash img {
+    width: 20px;
+    height: 20px;
+}
+
+.divBaloes {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.balao-dash p {
+    margin-left: 5px;
+}
+
 #pesoAtual {
     font-size: 28px;
     font-weight: bold;
@@ -221,4 +236,13 @@ body {
 #pesoProgresso {
     font-size: 28px;
     font-weight: bold;
+}
+
+#graficos {
+    padding: 20px;
+    height: 600px;
+    width: 1400px;
+    background-color: #F1F2F0;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }

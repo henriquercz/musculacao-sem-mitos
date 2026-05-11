@@ -17,7 +17,8 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
-var ultimoPesoRouter = require("./src/routes/ultimoPeso")
+var ultimoPesoRouter = require("./src/routes/ultimoPeso");
+var alterarPesoRouter = require("./src/routes/alterarPesoAtual");
 
 // arquivos da web-data-viz
 var avisosRouter = require("./src/routes/avisos");
@@ -33,6 +34,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/ultimoPeso", ultimoPesoRouter);
+app.use("/alterarPesoAtual", alterarPesoRouter);
 
 // da web-data-viz
 app.use("/avisos", avisosRouter);

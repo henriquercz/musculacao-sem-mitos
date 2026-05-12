@@ -194,6 +194,19 @@ body {
     align-items: center;
 }
 
+.balaoPeso-dash {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(21, 63, 201, 0.302);
+    border-radius: 50px;
+    border: darkblue 2px solid;
+    width: 300px;
+    height: 50px;
+    padding-left: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
 .secao-kpi {
     display: flex;
     flex-direction: row;
@@ -208,7 +221,7 @@ body {
     border-radius: 15px;
 }
 
-.balao-dash img {
+.balaoPeso-dash img {
     width: 20px;
     height: 20px;
 }
@@ -219,7 +232,7 @@ body {
     gap: 20px;
 }
 
-.balao-dash p {
+.balaoPeso-dash p {
     margin-left: 5px;
 }
 

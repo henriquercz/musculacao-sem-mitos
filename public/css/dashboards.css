@@ -41,6 +41,29 @@ body {
     font-size: 28px;
 }
 
+.btn-nav a {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-decoration: none;
+}
+
+
+.nestaPagina {
+    background-color: rgba(21, 63, 201);
+    border-radius: 15px;
+}
+
+.nestaPagina h3 {
+    color: white;
+}
+
+.nestaPagina img {
+    width: 36px;
+    height: 36px;
+    margin-top: 17px;
+}
+
 .dash {
     width: 80%;
     margin-left: 20%;
@@ -76,13 +99,21 @@ body {
 }
 
 .btn-nav h3 {
-    color: rgb(21, 63, 201);
     font-size: 20px;
 }
 
-.btn-nav a {
+.btn-nav h3:visited {
     color: black;
 }
+
+.btn-nav h3:hover {
+    color: black;
+}
+
+.btn-nav h3:active {
+    color: black;
+}
+
 
 /* SECAO DE VIDEOS */
 .secao-videos {

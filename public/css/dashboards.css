@@ -46,6 +46,16 @@ body {
     flex-direction: row;
     color: white;
     text-decoration: none;
+    align-items: center;
+    gap: 8px
+}
+
+.btn-nav a svg {
+    flex-shrink: 0;
+}
+
+.btn-nav a h3 {
+    margin: 0;
 }
 
 
@@ -256,6 +266,11 @@ body {
 
 .card-kpi h3 {
     font-weight: 400;
+}
+
+.card-kpi p {
+    color: rgba(21, 63, 201);
+    font-weight: bold;
 }
 
 .balaoPeso-dash img {

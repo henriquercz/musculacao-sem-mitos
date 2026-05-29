@@ -1,7 +1,7 @@
-var avisoModel = require("../models/avisoModel");
+var forumModel = require("../models/forumModel");
 
 function listar(req, res) {
-    avisoModel.listar().then(function (resultado) {
+    forumModel.listar().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -9,7 +9,7 @@ function listar(req, res) {
         }
     }).catch(function (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        console.log("Houve um erro ao buscar os publicacaos: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
     });
 }
@@ -17,7 +17,7 @@ function listar(req, res) {
 function listarPorUsuario(req, res) {
     var idUsuario = req.params.idUsuario;
 
-    avisoModel.listarPorUsuario(idUsuario)
+    forumModel.listarPorUsuario(idUsuario)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -31,7 +31,7 @@ function listarPorUsuario(req, res) {
             function (erro) {
                 console.log(erro);
                 console.log(
-                    "Houve um erro ao buscar os avisos: ",
+                    "Houve um erro ao buscar os publicacaos: ",
                     erro.sqlMessage
                 );
                 res.status(500).json(erro.sqlMessage);
@@ -39,10 +39,10 @@ function listarPorUsuario(req, res) {
         );
 }
 
-function pesquisarDescricao(req, res) {
-    var descricao = req.params.descricao;
+function pesquisarConteudo(req, res) {
+    var conteudo = req.params.conteudo;
 
-    avisoModel.pesquisarDescricao(descricao)
+    forumModel.pesquisarConteudo(conteudo)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -54,7 +54,7 @@ function pesquisarDescricao(req, res) {
         ).catch(
             function (erro) {
                 console.log(erro);
-                console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+                console.log("Houve um erro ao buscar os publicacaos: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             }
         );
@@ -62,17 +62,17 @@ function pesquisarDescricao(req, res) {
 
 function publicar(req, res) {
     var titulo = req.body.titulo;
-    var descricao = req.body.descricao;
+    var conteudo = req.body.conteudo;
     var idUsuario = req.params.idUsuario;
 
     if (titulo == undefined) {
         res.status(400).send("O título está indefinido!");
-    } else if (descricao == undefined) {
+    } else if (conteudo == undefined) {
         res.status(400).send("A descrição está indefinido!");
     } else if (idUsuario == undefined) {
         res.status(403).send("O id do usuário está indefinido!");
     } else {
-        avisoModel.publicar(titulo, descricao, idUsuario)
+        forumModel.publicar(titulo, conteudo, idUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -89,10 +89,10 @@ function publicar(req, res) {
 }
 
 function editar(req, res) {
-    var novaDescricao = req.body.descricao;
-    var idAviso = req.params.idAviso;
+    var novoConteudo = req.body.conteudo;
+    var idPublicacao = req.params.idPublicacao;
 
-    avisoModel.editar(novaDescricao, idAviso)
+    forumModel.editar(novoConteudo, idPublicacao)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -109,9 +109,9 @@ function editar(req, res) {
 }
 
 function deletar(req, res) {
-    var idAviso = req.params.idAviso;
+    var idPublicacao = req.params.idPublicacao;
 
-    avisoModel.deletar(idAviso)
+    forumModel.deletar(idPublicacao)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -129,7 +129,7 @@ function deletar(req, res) {
 module.exports = {
     listar,
     listarPorUsuario,
-    pesquisarDescricao,
+    pesquisarConteudo,
     publicar,
     editar,
     deletar

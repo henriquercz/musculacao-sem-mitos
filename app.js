@@ -19,9 +19,10 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var ultimoPesoRouter = require("./src/routes/ultimoPeso");
 var alterarPesoRouter = require("./src/routes/alterarPesoAtual");
+var alterarMetaRouter = require("./src/routes/alterarMetaAtual");
 
 // arquivos da web-data-viz
-var avisosRouter = require("./src/routes/avisos");
+var forumRouter = require("./src/routes/forum");
 var medidasRouter = require("./src/routes/medidas");
 var aquariosRouter = require("./src/routes/aquarios");
 
@@ -35,9 +36,10 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/ultimoPeso", ultimoPesoRouter);
 app.use("/alterarPesoAtual", alterarPesoRouter);
+app.use("/alterarMetaAtual", alterarMetaRouter);
 
 // da web-data-viz
-app.use("/avisos", avisosRouter);
+app.use("/forum", forumRouter);
 app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 

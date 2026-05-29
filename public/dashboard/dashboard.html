@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body id="bodyBackground">
     <div class="janela">
         <div class="header-left">
             <h1>Musculação <span>sem Mitos</span></h1>
@@ -77,6 +77,13 @@
                         <p>Registrar seu novo peso</p>
                     </div>
                 </a>
+
+                <a href="#alterarMeta" title="editar ícones" onclick="abrirCardAlterarMeta()">
+                    <div class="balaoPeso-dash">
+                        <img src="../assets/icon/botao-editar.png" alt="">
+                        <p>Alterar sua meta de peso:</p>
+                    </div>
+                </a>
             </div>
 
 
@@ -111,6 +118,25 @@
                     <input type="number" name="" id="iptNovoPeso">
                 </h3>
                 <button onclick="atualizarPeso()">Atualizar</button>
+            </div>
+
+            <div id="overlayMeta" style="display: none;"></div>
+            <div id="modalAlterarMeta">
+                <div class="conteudoModalMeta">
+                    <div class="fecharModalMeta">
+                        <button onclick="modalAlterarMeta.style.display = 'none'; overlayMeta.style.display = 'none';">X</button>
+                    </div>
+                    <h2>Atualize para sua nova meta:</h2>
+                    <h3>
+                        Insira o peso:
+                        <input type="number" name="" id="iptNovaMetaPeso">
+                    </h3>
+                    <h3>
+                        Insira a nova data:
+                        <input type="date" name="" id="iptNovaMetaData">
+                    </h3>
+                    <button onclick="atualizarMeta()">ATUALIZAR META</button>
+                </div>
             </div>
 
 
@@ -378,8 +404,54 @@
         }
     }
 
+    function abrirCardAlterarMeta() {
+        modalAlterarMeta.style.display = 'flex';
+        overlayMeta.style.display = 'block';
+    }
+
     function sumirMensagem() {
         cardErro.style.display = "none";
+    }
+
+    function atualizarMeta() {
+        var novoPesoMetaVar = Number(iptNovaMetaPeso.value);
+        var novaDataMetaVar = iptNovaMetaData.value;
+
+        if (novoPesoMetaVar == '' || novaDataMetaVar == '') {
+            alert('Os campos não podem estar vazios.');
+        } else if (novoPesoMetaVar < 20) {
+            alert('Seu peso não pode ser menor que 20Kg');
+        } else if (novoPesoMetaVar > 400) {
+            alert('Seu peso novo não pode ser superior a 400Kg.');
+        } else {
+            fetch("/alterarMetaAtual/atualizarMetaAtual", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    novoPesoMetaServer: novoPesoMetaVar,
+                    novaDataMetaServer: novaDataMetaVar,
+                    idUsuario: sessionStorage.ID_USUARIO
+                }),
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        cardErro.style.display = "block";
+                        mensagem_erro.innerHTML = "Meta atualizada com sucesso! Redirecionando...";
+                        setTimeout(() => {
+                            window.location = "dashboard.html";
+                        }, "2000");
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
+        }
     }
 
     window.onload = function () {

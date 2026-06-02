@@ -1,5 +1,5 @@
-// var ambiente_processo = 'producao';
-var ambiente_processo = 'desenvolvimento';
+var ambiente_processo = 'producao';
+// var ambiente_processo = 'desenvolvimento';
 
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 // Acima, temos o uso do operador ternário para definir o caminho do arquivo .env
@@ -20,6 +20,7 @@ var usuarioRouter = require("./src/routes/usuarios");
 var ultimoPesoRouter = require("./src/routes/ultimoPeso");
 var alterarPesoRouter = require("./src/routes/alterarPesoAtual");
 var alterarMetaRouter = require("./src/routes/alterarMetaAtual");
+var influenciadoresRouter = require("./src/routes/influenciadores")
 
 // arquivos da web-data-viz
 var forumRouter = require("./src/routes/forum");
@@ -37,6 +38,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/ultimoPeso", ultimoPesoRouter);
 app.use("/alterarPesoAtual", alterarPesoRouter);
 app.use("/alterarMetaAtual", alterarMetaRouter);
+app.use("/influenciadores", influenciadoresRouter);
 
 // da web-data-viz
 app.use("/forum", forumRouter);

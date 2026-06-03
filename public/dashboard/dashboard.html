@@ -111,13 +111,19 @@
                 <canvas id="myChartCanvas"></canvas>
             </div>
 
-            <div id="cardAlterarPeso" class="cardAlterarPeso" style="display: none;">
-                <h1>Registre seu novo peso:</h1>
-                <h3>
-                    Novo peso:
-                    <input type="number" name="" id="iptNovoPeso">
-                </h3>
-                <button onclick="atualizarPeso()">Atualizar</button>
+            <div id="overlayPeso" style="display: none;"></div>
+            <div id="modalAlterarPeso">
+                <div class="conteudoModalMeta">
+                    <div class="fecharModalMeta">
+                        <button onclick="modalAlterarPeso.style.display = 'none'; overlayPeso.style.display = 'none';">X</button>
+                    </div>
+                    <h2>Registre seu novo peso:</h2>
+                    <h3>
+                        Novo peso:
+                        <input type="number" name="" id="iptNovoPeso">
+                    </h3>
+                    <button class="btn-atualizar" onclick="atualizarPeso()">ATUALIZAR PESO</button>
+                </div>
             </div>
 
             <div id="overlayMeta" style="display: none;"></div>
@@ -135,7 +141,7 @@
                         Insira a nova data:
                         <input type="date" name="" id="iptNovaMetaData">
                     </h3>
-                    <button onclick="atualizarMeta()">ATUALIZAR META</button>
+                    <button class="btn-atualizar" onclick="atualizarMeta()">ATUALIZAR META</button>
                 </div>
             </div>
 
@@ -368,7 +374,8 @@
 
 
     function abrirCardAlterarPeso() {
-        cardAlterarPeso.style.display = 'block';
+        modalAlterarPeso.style.display = 'flex';
+        overlayPeso.style.display = 'block';
     }
 
     function atualizarPeso() {
@@ -395,6 +402,8 @@
                     if (resposta.ok) {
                         cardErro.style.display = "block";
                         mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
+                        modalAlterarPeso.style.display = 'none';
+                        overlayPeso.style.display = 'none';
                         setTimeout(() => {
                             window.location = "dashboard.html";
                         }, "2000");
@@ -445,6 +454,8 @@
                     if (resposta.ok) {
                         cardErro.style.display = "block";
                         mensagem_erro.innerHTML = "Meta atualizada com sucesso! Redirecionando...";
+                        modalAlterarMeta.style.display = 'none';
+                        overlayMeta.style.display = 'none';
                         setTimeout(() => {
                             window.location = "dashboard.html";
                         }, "2000");

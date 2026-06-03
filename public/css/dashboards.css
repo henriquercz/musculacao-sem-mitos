@@ -322,7 +322,7 @@ body {
     max-height: 500px;
 }
 
-#modalAlterarMeta {
+#modalAlterarMeta, #modalAlterarPeso {
     display: none;
     justify-content: center;
     align-items: center;
@@ -331,22 +331,72 @@ body {
     border-radius: 5%;
     font-weight: 500;
 
-    background-color: rgba(21, 63, 201, 0.7);
+    background-color: rgba(21, 63, 201, 0.9);
     color: white;
 
     position: fixed;
     top: 25%;
     left: 40%;
+    z-index: 1000;
 }
 
-#overlayMeta {
+#overlayMeta, #overlayPeso {
     position: fixed;
     display: none;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.conteudoModalMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+.fecharModalMeta {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fecharModalMeta button {
+    background: none;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fecharModalMeta button:hover {
+    color: #ff4d4d;
+}
+
+.conteudoModalMeta .btn-atualizar {
+    background-color: #fff;
+    color: rgb(21, 63, 201);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.conteudoModalMeta .btn-atualizar:hover {
+    background-color: rgb(21, 63, 201);
+    color: #fff;
+    outline: 2px solid #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 /* SEÇÃO DE FÓRUM */

@@ -15,4 +15,12 @@ router.get("/buscarUltimosRegistrosPeso/:idUsuario", function (req, res) {
     ultimoPesoController.buscarUltimosRegistrosPeso(req, res);
 });
 
+router.post("/registrarConsumoAgua", function (req, res) {
+    ultimoPesoController.registrarConsumoAgua(req, res);
+});
+
+router.get("/buscarUltimoRegistroAgua/:idUsuario", function (req, res) {
+    ultimoPesoController.buscarUltimoRegistroAgua(req, res);
+});
+
 module.exports = router;

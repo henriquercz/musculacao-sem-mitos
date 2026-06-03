@@ -55,8 +55,50 @@ function buscarUltimosRegistrosPeso(req, res) {
 }
 
 
+function registrarConsumoAgua(req, res) {
+    var idUsuario = req.body.idUsuario;
+    var quantidade = req.body.quantidade;
+
+    if (idUsuario == undefined) {
+        res.status(400).send("O id do usuário está indefinido!");
+    } else if (quantidade == undefined) {
+        res.status(400).send("A quantidade de água está indefinida!");
+    } else {
+        ultimoPesoModel.registrarConsumoAgua(quantidade, idUsuario)
+            .then(function (resultado) {
+                res.status(200).json(resultado);
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao registrar consumo de água: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function buscarUltimoRegistroAgua(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    ultimoPesoModel.buscarUltimoRegistroAgua(idUsuario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar última quantidade de água: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
 module.exports = {
     buscarUltimoPeso,
     buscarMetaPeso,
-    buscarUltimosRegistrosPeso
+    buscarUltimosRegistrosPeso,
+    registrarConsumoAgua,
+    buscarUltimoRegistroAgua
 }

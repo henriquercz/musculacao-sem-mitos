@@ -74,3 +74,12 @@ create view vw_DiasRestantes as select p.peso as pesoAtual, u.pesoDesejado as pe
 select * from vw_DiasRestantes;
 
 show create view vw_DiasRestantes;
+
+create table registro_agua (
+idRegistroAgua int primary key auto_increment,
+quantidade decimal(5,2),
+dataRegistro datetime default now(),
+fkUsuario int,
+	constraint fkRegistroAguaUser foreign key (fkUsuario)
+		references usuario(idUser)
+);

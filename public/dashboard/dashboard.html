@@ -45,13 +45,13 @@
                     </a>
                 </div>
 
-                <div class="btn-nav">
+                <!-- <div class="btn-nav">
                     <a href="mural.html">
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
   <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
 </svg><h3 style="color: black;">Fórum</h3>
                     </a>
-                </div>
+                </div> -->
             </div>
             <hr>
 
@@ -69,6 +69,10 @@
             <div class="divBaloes">
                 <div class="balao-dash">
                     <p>&bull; Seu objetivo é: <span id="balaoStatus"></span></p>
+                </div>
+
+                <div class="balaoAgua-dash">
+                    <p>&bull; Meta de água: <span id="balaoAgua">--</span> L/dia</p>
                 </div>
 
                 <a href="#cardAlterarPeso" title="editar ícones" onclick="abrirCardAlterarPeso()">
@@ -471,9 +475,32 @@
         }
     }
 
+    function exibirMetaAgua() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/ultimoPeso/buscarUltimoRegistroAgua/${idUsuario}`, { cache: 'no-store' })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 200) {
+                        resposta.json().then(function (resultado) {
+                            balaoAgua.innerHTML = resultado[0].quantidade;
+                        });
+                    } else if (resposta.status == 204) {
+                        balaoAgua.innerHTML = "0.0";
+                    }
+                } else {
+                    console.log("Erro ao buscar a quantidade de água do usuário.");
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro na requisição da quantidade de água: ", erro);
+            });
+    }
+
     window.onload = function () {
         exibirPesoAtual();
         exibirMetaAtual();
+        exibirMetaAgua();
         obterDadosGrafico(idUsuario);
     }
 </script>

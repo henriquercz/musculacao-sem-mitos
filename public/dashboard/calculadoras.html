@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculadoras | Musculação Sem Mitos</title>
     <link rel="stylesheet" href="../css/estilo.css">
     <link rel="stylesheet" href="../css/dashboards.css">
     <script src="./js/sessao.js"></script>
+    <link rel="icon" href="../assets/icon/favicon.png">
 </head>
 
 <body>
@@ -45,14 +46,14 @@
                 </a>
             </div>
 
-            <div class="btn-nav">
+            <!-- <div class="btn-nav">
                 <a href="mural.html">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
                     </svg>
                     <h3 style="color: black;">Fórum</h3>
                 </a>
-            </div>
+            </div> -->
         </div>
         
         <div class="btn-logout" onclick="limparSessao()">
@@ -63,7 +64,7 @@
         <!-- Conteúdo principal e gráficos aqui -->
          <h1>Calculadoras</h1>
          <div class="secao-calculadora">
-            <div class="card-video card-calc">
+            <div class="card-video card-calc" style="height: fit-content; padding-bottom: 25px;">
                 <h2>Calcule o seu IMC:</h2>
                 <div class="conteudo-calc">
                     <h3>
@@ -77,18 +78,32 @@
                 </div>
                 <button onclick="calcularIMC()">Calcular</button>
                 <div id="resultadoIMC"></div>
+                <p style="font-size: 11px; color: #555; text-align: center; margin-top: 15px; width: 85%;">
+                    * Fonte: Classificação de Índice de Massa Corporal (IMC) estabelecida pela Organização Mundial da Saúde (OMS).
+                </p>
             </div>
 
-            <div class="card-video card-calc">
+            <div class="card-video card-calc" style="height: fit-content; padding-bottom: 25px;">
                 <h2>Quantos litros de água você deve beber por dia?</h2>
-                <div class="conteudo-calc">
+                <div class="conteudo-calc" style="flex-direction: column; gap: 10px;">
                     <h3>
                         Insira seu peso (KG):
-                        <input type="number" placeholder="Ex: 80 KG" id="iptPesoAgua">
+                        <input type="number" placeholder="Ex: 80 KG" id="iptPesoAgua" style="margin-bottom: 10px;">
+                    </h3>
+                    <h3>
+                        Nível de atividade física:
+                        <select id="selAtividadeAgua" style="border: 2px solid rgb(21, 63, 201); border-radius: 10px; padding: 8px; font-family: inherit; font-size: 16px; background: white; text-align: center; margin-left: 5px;">
+                            <option value="35">Sedentário / Atividade Leve (35ml/kg)</option>
+                            <option value="45" selected>Atividade Moderada / Musculação (45ml/kg)</option>
+                            <option value="55">Atividade Intensa / Musculação Pesada (55ml/kg)</option>
+                        </select>
                     </h3>
                 </div>
                 <button onclick="calcularAgua()">Calcular</button>
                 <div id="resultadoAgua"></div>
+                <p style="font-size: 11px; color: #555; text-align: center; margin-top: 15px; width: 85%;">
+                    * Fonte: Diretrizes do Colégio Americano de Medicina do Esporte (ACSM) para taxas de hidratação de atletas e praticantes de atividade física.
+                </p>
             </div>
          </div>
     </div>
@@ -142,20 +157,41 @@
 
     function calcularAgua() {
         let peso = Number(iptPesoAgua.value);
+        let mlPorKg = Number(selAtividadeAgua.value);
 
         if (peso <= 0) {
             alert("Por favor, insira um valor válido para peso!");
         } else {
-            let litros = peso * 0.035;
+            let litros = (peso * mlPorKg) / 1000;
 
             resultadoAgua.style.display = "flex";
             resultadoAgua.innerHTML = `
-                <span style="font-size: 14px; color: #666;">Com base no seu peso, você deve beber aproximadamente:</span>
+                <span style="font-size: 14px; color: #666;">Com base no seu peso e atividade, você deve beber aproximadamente:</span>
                 <b style="font-size: 36px; color: #153fc9; margin: 10px 0;">${litros.toFixed(2)} litros</b>
                 <span style="font-size: 18px; color: #27ae60; font-weight: bold;">
                     de água por dia.
                 </span>
             `;
+
+            // Registrar no banco de dados
+            fetch("/ultimoPeso/registrarConsumoAgua", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    quantidade: litros.toFixed(2),
+                    idUsuario: sessionStorage.ID_USUARIO
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("Consumo de água registrado com sucesso!");
+                } else {
+                    console.log("Erro ao registrar consumo de água.");
+                }
+            }).catch(function (erro) {
+                console.log("Erro ao enviar consumo de água: ", erro);
+            });
         }
     }
 </script>

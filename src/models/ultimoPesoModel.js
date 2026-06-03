@@ -36,8 +36,30 @@ function buscarUltimosRegistrosPeso(idUsuario, limite_linhas) {
 }
 
 
+function registrarConsumoAgua(quantidade, idUsuario) {
+
+    var instrucaoSql = `insert into registro_agua (quantidade, dataRegistro, fkUsuario) 
+    values (${quantidade}, now(), ${idUsuario})`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarUltimoRegistroAgua(idUsuario) {
+
+    var instrucaoSql = `select quantidade from registro_agua 
+    where fkUsuario = ${idUsuario} 
+    order by idRegistroAgua desc limit 1`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     buscarUltimoPeso,
     buscarMetaPeso,
-    buscarUltimosRegistrosPeso
+    buscarUltimosRegistrosPeso,
+    registrarConsumoAgua,
+    buscarUltimoRegistroAgua
 }

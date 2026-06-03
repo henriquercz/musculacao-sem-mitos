@@ -452,7 +452,7 @@ body {
 /* FOOTER */
 
 .footer {
-  background-color: #32b9cd;
+  background-color: rgb(21, 63, 201);
   height: 150px;
   color: #fff;
   display: flex;

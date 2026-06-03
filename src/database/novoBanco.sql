@@ -31,6 +31,14 @@ social varchar(45),
 imagem varchar(255)
 );
 
+CREATE TABLE favorito_influenciador (
+    fkUsuario INT,
+    fkInfluenciador INT,
+    PRIMARY KEY (fkUsuario, fkInfluenciador),
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUser),
+    FOREIGN KEY (fkInfluenciador) REFERENCES influenciadores(idInfluenciador)
+);
+
 -- drop table influenciadores;
 
 insert into influenciadores (nomeInfluenciador, social, imagem) values

@@ -1,3 +1,9 @@
+/**
+ * Folha de estilos para o painel (dashboards)
+ * Autor: Capitão Henrique / Assistente Antigravity
+ * Data: 2026-06-03
+ * Versão: 1.1
+ */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
@@ -503,9 +509,32 @@ body {
 }
 
 #card_influenciador button {
-    width: 150px;
-    height: 50px;
+    width: 120px;
+    height: 40px;
     background-color: rgb(50, 29, 169);
+    color: white;
+    font-weight: bold;
     border-radius: 15px;
     border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#card_influenciador button:hover {
+    background-color: rgb(75, 45, 220);
+}
+
+.card-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-favoritado {
+    background-color: #ff4d4d !important;
+}
+
+.btn-favoritado:hover {
+    background-color: #ff3333 !important;
 }

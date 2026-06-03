@@ -103,27 +103,82 @@
 </html>
 
 <script>
+    /**
+     * Módulo frontend de visualização de vídeos e gerenciamento de influenciadores favoritos.
+     * Autor: Capitão Henrique / Assistente Antigravity
+     * Data: 2026-06-03
+     * Versão: 1.1
+     */
+
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
+    /**
+     * Carrega todos os influenciadores e seus status de favoritos do backend e os exibe em tela.
+     */
     function listarInfluenciadores() {
+        var idUsuario = sessionStorage.ID_USUARIO;
 
-        fetch(`/influenciadores/listarInfluenciadores`, { cache: 'no-store' }).then(function (resposta) {
+        if (idUsuario == undefined) {
+            console.log("Usuário não está autenticado.");
+            return;
+        }
+
+        fetch(`/influenciadores/listarInfluenciadores/${idUsuario}`, { cache: 'no-store' }).then(function (resposta) {
             if (resposta.ok) {
                 resposta.json().then(function (influenciadores) {
-                    console.log(`Dados recebidos: ${JSON.stringify(influenciadores)}`)
-    
+                    console.log(`Dados recebidos: ${JSON.stringify(influenciadores)}`);
+                    
+                    cards_influenciadores.innerHTML = "";
                     for (let i = 0; i < influenciadores.length; i++) {
+                        let idInfluenciador = influenciadores[i].idInfluenciador;
                         let nomeInfluenciador = influenciadores[i].nomeInfluenciador;
                         let imagem = influenciadores[i].imagem;
                         let social = influenciadores[i].social;
+                        let estaFavoritado = influenciadores[i].estaFavoritado;
+
+                        let classeBotao = estaFavoritado == 1 ? "btn-favoritado" : "";
+                        let textoBotao = estaFavoritado == 1 ? "Remover" : "Favoritar";
+
                         cards_influenciadores.innerHTML += `<div id="card_influenciador">
                             <img src="${imagem}" alt="">
                             <h3>${nomeInfluenciador}</h3>
-                            <a href="${social}"><button>Conheça</button></a>
+                            <div class="card-buttons">
+                                <a href="${social}" target="_blank"><button>Conheça</button></a>
+                                <button class="${classeBotao}" onclick="alternarFavorito(${idInfluenciador}, ${estaFavoritado})">${textoBotao}</button>
+                            </div>
                         </div> <br>`;
                     }
-                })
+                });
             }
-        })
+        });
+    }
+
+    /**
+     * Alterna o estado de favorito de um influenciador enviando uma requisição ao backend.
+     * @param {number} idInfluenciador - ID do influenciador a ser modificado.
+     * @param {number} estaFavoritado - Status de favorito atual (1 se favorito, 0 se não).
+     */
+    function alternarFavorito(idInfluenciador, estaFavoritado) {
+        var idUsuario = sessionStorage.ID_USUARIO;
+        var rota = estaFavoritado == 1 ? "desfavoritar" : "favoritar";
+
+        fetch(`/influenciadores/${rota}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuario: idUsuario,
+                idInfluenciador: idInfluenciador
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                listarInfluenciadores();
+            } else {
+                console.log("Erro ao atualizar favorito!");
+            }
+        }).catch(function (erro) {
+            console.log("Erro na comunicação com o servidor: ", erro);
+        });
     }
 </script>

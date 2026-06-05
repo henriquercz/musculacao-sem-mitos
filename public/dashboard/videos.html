@@ -153,11 +153,7 @@
         });
     }
 
-    /**
-     * Alterna o estado de favorito de um influenciador enviando uma requisição ao backend.
-     * @param {number} idInfluenciador - ID do influenciador a ser modificado.
-     * @param {number} estaFavoritado - Status de favorito atual (1 se favorito, 0 se não).
-     */
+
     function alternarFavorito(idInfluenciador, estaFavoritado) {
         var idUsuario = sessionStorage.ID_USUARIO;
         var rota = estaFavoritado == 1 ? "desfavoritar" : "favoritar";

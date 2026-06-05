@@ -23,20 +23,35 @@ fkUsuario int,
 		references usuario(idUser)
 );
 
+CREATE TABLE publicacao (
+idPublicacao int primary key auto_increment,
+titulo varchar(100),
+conteudo varchar(600) not null,
+dtPublicacao datetime default now(),
+fkUsuario int not null,
+idPublicacaoPai int,
+  constraint fk_pub_usuario
+    foreign key (fkUsuario) references usuario(idUser),
+  constraint fk_pub_pai
+    foreign key (idPublicacaoPai) references publicacao(idPublicacao)
+);
+
+CREATE TABLE publicacao_salva (
+fkUsuario int not null,
+fkPublicacao int not null,
+dtSalvo datetime default now(),
+  PRIMARY KEY (fkUsuario, fkPublicacao),
+  CONSTRAINT fk_salva_usuario
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUser),
+  CONSTRAINT fk_salva_publicacao
+    FOREIGN KEY (fkPublicacao) REFERENCES publicacao(idPublicacao)
+);
 
 CREATE TABLE influenciadores (
 idInfluenciador int primary key auto_increment,
 nomeInfluenciador varchar(45),
 social varchar(45),
 imagem varchar(255)
-);
-
-CREATE TABLE favorito_influenciador (
-    fkUsuario INT,
-    fkInfluenciador INT,
-    PRIMARY KEY (fkUsuario, fkInfluenciador),
-    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUser),
-    FOREIGN KEY (fkInfluenciador) REFERENCES influenciadores(idInfluenciador)
 );
 
 -- drop table influenciadores;
@@ -91,3 +106,15 @@ fkUsuario int,
 	constraint fkRegistroAguaUser foreign key (fkUsuario)
 		references usuario(idUser)
 );
+
+CREATE TABLE favorito_influenciador (
+    fkUsuario INT,
+    fkInfluenciador INT,
+    PRIMARY KEY (fkUsuario, fkInfluenciador),
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUser),
+    FOREIGN KEY (fkInfluenciador) REFERENCES influenciadores(idInfluenciador)
+);
+
+select * from registro_agua where fkUsuario = 2;
+
+select * from usuario;
